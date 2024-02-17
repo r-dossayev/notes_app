@@ -21,11 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('notes')->group(function () {
     Route::get('/', 'NoteController@index');
-    Route::post('/', 'NoteController@store');
     Route::get('/{note}', 'NoteController@show');
-    // for admin
-    Route::group(['middleware' => 'auth:admin'], function () {
-        Route::put('/{note}', 'NoteController@update');
-        Route::delete('/{note}', 'NoteController@destroy');
+    Route::group(['middleware' => 'auth'], function () {
+        Route::post('/', 'NoteController@store');
+        Route::put('/{note}', 'NoteController@update')->can('update', 'note');
+        Route::delete('/{note}', 'NoteController@destroy')->can('delete', 'note');
     });
 });
