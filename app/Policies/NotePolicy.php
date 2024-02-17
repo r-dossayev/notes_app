@@ -20,17 +20,13 @@ class NotePolicy
 
     public function update(User $user, Note $note): bool
     {
-        return $user->is_admin || $user->id === $note->user_id
-            ? Response::allow()
-            : Response::deny('You do not own this note.');
+        return $user->is_admin || $user->id === $note->user_id;
     }
 
 
     public function delete(User $user, Note $note): bool
     {
-        return $user->is_admin || $user->id === $note->user_id
-            ? Response::allow()
-            : Response::deny('You do not own this note.');
+        return $user->is_admin || $user->id === $note->user_id;
     }
 
 

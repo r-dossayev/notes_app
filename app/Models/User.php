@@ -10,7 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -37,9 +36,9 @@ class User extends Authenticatable
         return $this->hasMany(Note::class, 'user_id', 'id');
     }
 
-    public function roles(): HasMany
+    public function roles()
     {
-        return $this->hasMany(Role::class, 'user_id', 'id');
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
     public function getIsAdminAttribute(): bool
